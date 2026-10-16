@@ -1,0 +1,5 @@
+prefix_rule(
+    pattern = ["gh"],
+    decision = "prompt",
+    justification = "Solicitar aprobación antes de ejecutar GitHub CLI",
+)
