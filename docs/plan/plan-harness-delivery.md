@@ -1,6 +1,6 @@
 # Plan de implementación del Harness Delivery — 5 fases
 
-**Estado del documento:** plan de trabajo para Codex (no implementado todavía)  
+**Estado del documento:** fases 1 y 2 implementadas; fase 2 cerrada con la excepción de protección de rama documentada en §2.4
 **Fecha de referencia:** 15 de octubre de 2026  
 **Idioma:** español  
 **Objetivo:** construir y validar un harness de desarrollo multi-repositorio basado en historias de usuario (HU), con planificación refinable, aprobación humana mediante PR en `demo-specs`, ejecución local mediante Skills y CLI, y ejecución automática mediante GitHub Issues + Symphony + Codex.
@@ -673,6 +673,16 @@ Librerías orientativas: `commander` o `oclif`, `zod`, parser YAML mantenido, `o
 - Revisión y merge correctos ⇒ aprobación trazable (PR, reviewer, SHA, digest, revision).
 
 **Criterio de salida:** una HU puede pasar del primer borrador al **plan aprobado por PR** con Skills e instrucciones instaladas desde un paquete de plugins verificable, sin ejecutar todavía código de negocio.
+
+### 2.4. Cierre de fase y excepción de protección de rama (17 de octubre de 2026)
+
+La fase 2 se da por **cerrada con una excepción aceptada por el usuario**. Las PR técnicas de los seis repositorios están fusionadas. En `demo-specs`, la [PR #5 de HU-001](https://github.com/jhidalgo3/demo-specs/pull/5), revisión 3, recibió la aprobación de `kinderjava` sobre el commit final `74d2edc07458339a7ccf614b53f931b85576b697`, superó `validate-plan / validate-plan` y se fusionó en `843c776b5aba70579d7351a806d1a6912db142ef`. La comprobación real `delivery hu approval status HU-001` devolvió `APPROVED_MERGED` tras verificar review, checks, merge y digest. Las revisiones 1 y 2, fusionadas sin review válida, no autorizaron tareas.
+
+**Excepción EX-F2-01:** la suscripción actual no permite configurar protección de ramas ni rulesets en el repositorio privado `demo-specs`; ambas consultas a la API de GitHub devolvieron HTTP 403 con el mensaje «Upgrade to GitHub Pro or make this repository public to enable this feature». Por tanto, queda pendiente el punto 2.1.8 en lo relativo a **imponer en GitHub** aprobación humana, checks obligatorios y bloqueo de merges directos. `CODEOWNERS` y los workflows están instalados, pero GitHub no fuerza esa política de merge. Se acepta esta limitación para cerrar la fase 2 sin cambiar la visibilidad del repositorio ni la suscripción.
+
+**Control mientras dure la excepción:** quien fusione una PR de planificación debe comprobar manualmente la review humana sobre el último commit y el check requerido; antes de despachar cualquier tarea, el ejecutor debe obtener `APPROVED_MERGED` del `ApprovalVerifier`. Una PR fusionada por bypass o sin evidencias válidas queda bloqueada por la CLI. Este control protege las ejecuciones que pasan por el harness, pero no impide que alguien fusione directamente en GitHub o ejecute código por fuera de él.
+
+**Cierre de la excepción:** cuando la suscripción permita protección en repositorios privados, configurar en `demo-specs/main` review humana obligatoria, descarte de aprobaciones obsoletas, `validate-plan / validate-plan` como check requerido y prohibición de merges directos; verificar las reglas con una PR de prueba y retirar EX-F2-01. No habilitar ejecución de tareas por vías que omitan el verificador mientras tanto.
 
 ---
 
