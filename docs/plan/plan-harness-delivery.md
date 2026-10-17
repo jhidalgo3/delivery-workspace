@@ -1,6 +1,6 @@
 # Plan de implementación del Harness Delivery — 5 fases
 
-**Estado del documento:** fases 1 y 2 implementadas; fase 2 cerrada con la excepción de protección de rama documentada en §2.4
+**Estado del documento:** fases 1, 2 y 3 implementadas y cerradas; permanece la excepción de protección de rama documentada en §2.4
 **Fecha de referencia:** 15 de octubre de 2026  
 **Idioma:** español  
 **Objetivo:** construir y validar un harness de desarrollo multi-repositorio basado en historias de usuario (HU), con planificación refinable, aprobación humana mediante PR en `demo-specs`, ejecución local mediante Skills y CLI, y ejecución automática mediante GitHub Issues + Symphony + Codex.
@@ -739,6 +739,14 @@ No modificar el checkout principal del usuario ni hacer `git reset --hard` sobre
 - Los tests de API pasan tras una primera tarea real de Codex (por ejemplo `GET /products`).
 
 **Criterio de salida:** el usuario puede tomar una HU aprobada, seleccionar tareas y ejecutarlas **una a una**, con trazabilidad y aislamiento, sin arrancar Symphony.
+
+### 3.4. Cierre de fase (17 de octubre de 2026)
+
+La fase 3 se da por **cerrada**. Se fusionaron, en orden, las PR técnicas de [delivery-cli #3](https://github.com/jhidalgo3/delivery-cli/pull/3), [demo-specs #6](https://github.com/jhidalgo3/demo-specs/pull/6) y [demo-back-api #3](https://github.com/jhidalgo3/demo-back-api/pull/3), todas con sus checks en verde. `delivery hu approval status HU-001` volvió a devolver `APPROVED_MERGED` tras comprobar la revisión humana, los checks, el merge y el digest de la [PR de planificación #5](https://github.com/jhidalgo3/demo-specs/pull/5).
+
+La demostración local preparó los workspaces aislados de `API-01`, `WEB-01`, `E2E-01` y `QA-VERIFY`. `API-01` se ejecutó con Codex en `demo-back-api`, registró el thread `01a14981-55f4-7a41-96e1-b5306db89b27` y el commit `19e25342c4500ba20274e037e7e51c11e3846b57`, superó 11 tests de API y publicó la PR hacia la rama de entrega definida. La suite de la CLI cubre ramas origen/destino distintas, bloqueo sin aprobación, concurrencia, reanudación tras fallo, aislamiento, limpieza segura y reanudación sin conexión con evidencia firmada. La Skill `delivery-workspace` se distribuye desde el plugin versionado de `delivery-cli` y queda instalada en `demo-specs`.
+
+Se cumple el criterio de salida: una HU aprobada puede ejecutarse tarea a tarea, con trazabilidad y aislamiento, sin Symphony. La excepción EX-F2-01 de §2.4 sigue abierta: GitHub aún no impone protección de rama en `demo-specs`, por lo que se mantiene el control del verificador antes de ejecutar. La sincronización automática entre repositorios y Symphony corresponden a la fase 4.
 
 ---
 
