@@ -800,6 +800,8 @@ flowchart TD
 
 **Importante:** `demo-specs` no contiene ni fusiona el código de API/frontend/E2E. La HU padre y sus sub-issues representan **pertenencia funcional**; las ramas y PRs pertenecen a cada repositorio técnico. Las PRs de `demo-specs` son de planificación, contratos o tests de coordinación y se tratan separadamente.
 
+**Seguimiento desde la Issue técnica:** `task publish` enlaza la Issue gestionada en el cuerpo de la PR y ejecuta la reconciliación al crearla. La Issue conserva el enlace de vuelta a la PR y pasa a `status:review`, sin `agent:codex`, mientras la PR esté abierta. El siguiente paso del usuario es revisar la PR, aprobarla y fusionarla según la política del repositorio. El coordinador cierra la Issue técnica y asigna `status:accepted` solo después de verificar la PR fusionada, su commit integrado en la rama de entrega y el check `test` verde. Una PR cerrada sin merge vuelve a `status:blocked`; la HU padre permanece abierta hasta que todas las tareas requeridas y la aceptación funcional estén completas. Repetir `task publish` sobre una tarea ya publicada reconcilia su Issue sin crear otra PR.
+
 ### 4.3. Tabla de correspondencia de ejecución
 
 | Trabajo | Issue | Symphony | Rama y PR |
