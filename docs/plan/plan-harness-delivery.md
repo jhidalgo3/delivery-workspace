@@ -700,6 +700,7 @@ La fase 2 se da por **cerrada con una excepción aceptada por el usuario**. Las 
 6. Implementar `delivery workspace init HU --task ...`, `--all`, `delivery task status`, `task run`, `task verify` y `task publish`.
 7. Antes de `task run`, verificar aprobación válida en GitHub, revisión efectiva, dependencias y ausencia de lock ajeno; prohibir bypass implícito por `--local`.
 8. Integrar Codex como runner de implementación, con adaptador fake para tests y adaptador real para pruebas controladas. Guardar thread/run ID cuando esté disponible, salida, archivos, commit y tests.
+   `task run` marca `completed` cuando termina el turno del agente con cambios; ese estado aún no acredita pruebas ni commit. `task verify` es responsable de ejecutar las pruebas, crear el commit de los cambios pendientes en el worktree cuando pasen y registrar el SHA exacto antes de marcar `verified`. Si el agente ya creó un commit, conservarlo y verificarlo. Un error al crear el commit impide `verified` y permite repetir `task verify`; `task publish` solo acepta un SHA verificado y un worktree limpio.
 9. Restringir el directorio de trabajo/escritura al worktree del repositorio propietario; el contexto de los demás repositorios se pasa como artefactos de lectura o referencias versionadas.
 10. Para tareas E2E, permitir consumir los SHA integrados de API y frontend; no permitir a una tarea de verificación modificar otros repositorios.
 11. Implementar idempotencia de `workspace init`/`task run`, recuperación después de interrupción y registro de estado local con reinicio seguro.
